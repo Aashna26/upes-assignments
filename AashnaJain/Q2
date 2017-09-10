@@ -1,0 +1,56 @@
+import java.util.Scanner;
+
+public class HelloWorld{
+
+     public static void main(String []args){
+        double count=0; 
+        Scanner sc = new Scanner(System.in);
+        String line = sc.nextLine();                                    //Taking input travelTimes array of N-1 length 
+        String[] tokens = line.split(" ");
+        int n=tokens.length;
+        long[] readyTimes = new long[n];
+        long[] travelTimes = new long[tokens.length];
+        long[] cancelTimes = new long[n];
+        for (int i=0; i<tokens.length;i++)                               //Storing travelTimes array
+         travelTimes[i] = Long.parseLong(tokens[i]);
+        
+        for (int i=0;i<n;i++) // used for loop for user input                  
+        {
+         readyTimes[i]=sc.nextLong(); // Assigned users value to array      //Taking input readyTimes array
+        } 
+        
+        for (int i=0;i<n;i++) // used for loop for user input
+        {
+         cancelTimes[i]=sc.nextLong(); // Assigned users value to array     //Taking input cancelTimes array
+        }
+        
+        
+        count=readyTimes[0]+travelTimes[0];
+        
+        for(int i=1;i<n;i++)
+        {
+            if(count<=readyTimes[i])                            //When driver is early and has to wait
+            {
+                count=readyTimes[i]+travelTimes[i];
+            }
+            else if((count>readyTimes[i])&&(count<=cancelTimes[i])) //When passenger has to wait
+            {
+                count+=travelTimes[i];
+            }
+            else if(count>cancelTimes[i])                   //When passenger cancels the ride
+            {
+                System.out.println("-1");
+                System.exit(0);
+            }
+        }
+        
+        if(count>84600)
+        {
+            System.out.println("-1");                      //if total time exceeds total seconds in a day
+        }
+        else
+        System.out.println(count/60/60 + " Hours");    //Time to complete route from First request to last request in hours    
+        
+       
+     }
+}
